@@ -1,0 +1,17 @@
+/* ./app/globals.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+  
+  #root, #__next {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  
