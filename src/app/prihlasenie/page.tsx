@@ -10,7 +10,9 @@ export default function Prihlasenie() {
 
   return (
 
-      <Typography> Prihlas sa </Typography>
+    <Typography> Prihlas sa </Typography>
+
+    
 
   );
 }
