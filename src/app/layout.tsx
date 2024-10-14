@@ -1,11 +1,10 @@
 
-// ./app/layout.tsx
+// src/app/layout.tsx
 
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import "./globals.css";
-
-import Navbar from '@/components/Navbar';  // Import the Navbar component
-import React from 'react';
+import Navbar from "@/components/Navbar";
+import AuthProvider from "../components/AuthProvider";
 
 
 export const metadata: Metadata = {
@@ -21,12 +20,14 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <body>
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          <main style={{ flexGrow: 1 }}>
-            {children}
-          </main>
-          <Navbar /> {/* Bottom Navigation */}
-        </div>
+        <AuthProvider>
+          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <main style={{ flexGrow: 1 }}>
+              {children}
+            </main>
+          </div>
+          <Navbar /> {/* Moved Navbar outside of the main container */}
+        </AuthProvider>
       </body>
     </html>
   );
