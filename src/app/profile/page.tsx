@@ -4,7 +4,7 @@
 
 import Typography from "@mui/material/Typography";
 
-export const metadata = { title: "Zoznam profilov | ZoškaSnap" };
+export const metadata = { title: "Zoznam profilov | Kutyl s.r.o." };
 
 export default function ProfileList() {
 

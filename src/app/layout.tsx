@@ -1,15 +1,13 @@
-
 // src/app/layout.tsx
 
 import { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "../components/Navbar";
 import AuthProvider from "../components/AuthProvider";
 
-
 export const metadata: Metadata = {
-  title: "Moja apicka",
-  description: "Made by Sasenka Masenka",
+  title: "SnapZoška",
+  description: "Created by students of SPŠE Zochova 9, Bratislava",
 };
 
 export default function RootLayout({
@@ -26,7 +24,7 @@ export default function RootLayout({
               {children}
             </main>
           </div>
-          <Navbar /> {/* Moved Navbar outside of the main container */}
+          <Navbar /> 
         </AuthProvider>
       </body>
     </html>

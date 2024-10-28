@@ -2,17 +2,10 @@
 // src/app/prihlasenie/page.tsx
 
 
-import Typography from "@mui/material/Typography";
+import SignInView from "../../sections/SignInView";
 
-export const metadata = { title: "Zoznam profilov | ZoškaSnap" };
+export const metadata = { title: "Prihlásenie užívateľa | Kutyl s.r.o." };
 
 export default function Prihlasenie() {
-
-  return (
-
-    <Typography> Prihlas sa </Typography>
-
-    
-
-  );
+  return <SignInView />;
 }

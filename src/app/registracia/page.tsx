@@ -2,15 +2,10 @@
 // src/app/registracia/page.tsx
 
 
-import Typography from "@mui/material/Typography";
+import SignUpView from "../../sections/SignUpView";
 
-export const metadata = { title: "Zoznam profilov | ZoškaSnap" };
+export const metadata = { title: "Registrácia užívateľa | Kutyl s.r.o." };
 
 export default function Registracia() {
-
-  return (
-
-      <Typography> Registruj sa </Typography>
-
-  );
+  return <SignUpView />;
 }

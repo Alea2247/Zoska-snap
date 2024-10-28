@@ -1,19 +1,25 @@
 
-// ./app/(home)/page.tsx
+// src/app/page.tsx
 
-// import Typography from '@mui/material/Typography';
-import { useSession } from 'next-auth/react';
-import NonauthHomeView from './NonauthHomeView';
-import AuthHomeView from './AuthHomeView';
 
-export const metadata = { title : "Domov | Kutyl s.r.o." };
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+import AuthHomeView from "@/sections/AuthHomeView";
+import NonAuthHomeView from "@/sections/NonAuthHomeView";
 
-export default function HomePage() {
-  return (
-    <div>
-      <h1>Home Page</h1>
-      {/* Home page content */}
-    </div>
-  );
+export const metadata = { title: "Domov | Kutyl s.r.o." };
+
+export default async function HomePage() {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return <NonAuthHomeView />;
+    }
+
+    return <AuthHomeView session={session} />;
+  } catch (error) {
+    console.error("Error fetching session:", error);
+    return <NonAuthHomeView />;
+  }
 }
-
