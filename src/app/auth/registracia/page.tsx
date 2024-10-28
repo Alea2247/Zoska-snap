@@ -2,7 +2,7 @@
 // src/app/registracia/page.tsx
 
 
-import SignUpView from "../../sections/SignUpView";
+import SignUpView from "../../../sections/SignUpView";
 
 export const metadata = { title: "Registrácia užívateľa | Kutyl s.r.o." };
 
