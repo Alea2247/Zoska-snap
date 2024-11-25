@@ -54,3 +54,33 @@ Vercel – Sluzba ktora poskytuje dostupnost stranky mimo localhosta. Cize na in
 vypis struktury: #!/bin/bash function list_dir { local dir=$1 local prefix=$2 echo "$prefix|-- $(basename $dir)" for file in "$dir"/*; do if [ -d "$file" ]; then # Exclude node_modules, .next, and .git directories case "$(basename "$file")" in node_modules|.next|.git) continue ;; *) list_dir "$file" "$prefix " ;; esac elif [ -f "$file" ]; then # Display files as well echo "$prefix |-- $(basename "$file")" fi done }
 
 list_dir "." ""
+
+
+1. NextAuth:
+    Get started -> Adapters -> Prisma 
+    npm install @prisma/client @auth/prisma-adapter
+    npm install prisma --save-dev
+    npx prisma init
+
+2. Vercel -> Storage:
+    Postgres -> Create -> Accept -> Region -> Frankfurt, Germany-(fra1) -> Connect
+    in snap-zoska-4h-postgres:
+    .env.local -> Show secret -> Copy value of POSTGRES_URL
+
+3. VsCode:
+    In .env replace value of DATABASE_URL
+    .env
+    POSTGRES_URL="postgresql://username:password@hostname:port/ ... /verceldb?sslmode=require"
+    Create prisma.ts in src/app/api/auth/[...nextauth] -> copy code from NextAuth docs
+    Update authOptions.ts -> add:   import { PrismaAdapter } from "@auth/prisma-adapter"
+                                    import { prisma } from "./prisma"
+                                    adapter: PrismaAdapter(prisma),
+
+    package.json:   "build": "prisma generate && next build",
+                    "postinstall": "prisma generate"
+
+
+4. VsCode terminal:
+    npx prisma migrate dev --name init
+    npx prisma generate
+    npx prisma studio
