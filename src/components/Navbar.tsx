@@ -1,6 +1,3 @@
-
-// /src/components/Navbar.tsx
-
 "use client";
 
 import React from "react";
@@ -31,35 +28,32 @@ const Navbar = () => {
     router.push(newValue);
   };
 
-  // Non-authenticated navigation paths
   const nonAuthPaths = [
     { label: "Domov", value: "/", icon: <HomeIcon /> },
-    { label: "Prispevky", value: "/prispevok", icon: <AddCircleIcon /> },
+    { label: "Podmienky", value: "/podmienky", icon: <AddCircleIcon /> },
+    { label: "GDPR", value: "/gdpr", icon: <HomeIcon /> },
+    { label: "O-nas", value: "/o-nas", icon: <HomeIcon /> },
     { label: "Registrácia", value: "/auth/registracia", icon: <AppRegistrationIcon /> },
-    { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> }
+    { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> },
   ];
 
-  // Authenticated navigation paths
   const authPaths = [
     { label: "Domov", value: "/", icon: <HomeIcon /> },
     { label: "Hľadať", value: "/hladat", icon: <SearchIcon /> },
-    { label: "Pridať", value: "/prispevok", icon: <AddCircleIcon /> },
+    { label: "Prispevok", value: "/prispevok", icon: <AddCircleIcon /> },
+    { label: "Notifikacie", value: "/notifikacie", icon: <SearchIcon /> },
     {
       label: "Profil",
       value: "/profile",
       icon: session?.user?.image ? (
-        <Avatar 
-          alt={session?.user?.name || "User"} 
-          src={session?.user?.image || undefined} 
-        />
+        <Avatar alt={session?.user?.name || "User"} src={session?.user?.image || undefined} />
       ) : (
         <Avatar>{session?.user?.name?.charAt(0) || "U"}</Avatar>
-      )
+      ),
     },
     { label: "Odhlásiť", value: "/auth/odhlasenie", icon: <LogoutIcon /> },
   ];
 
-  // Decide which paths to use based on authentication status
   const paths = session ? authPaths : nonAuthPaths;
 
   return (

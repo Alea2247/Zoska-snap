@@ -84,3 +84,16 @@ list_dir "." ""
     npx prisma migrate dev --name init
     npx prisma generate
     npx prisma studio
+
+
+git clone https://github.com/Alea2247/Zoska-snap
+cd snap-zoska
+git init
+git branch -m main
+git config user.name "ALea2247"
+git config user.email "alexandraachbergerova2007@gmail.com"
+git remote add origin https://github.com/Alea2247/Zoska-snap.git
+git remote -v
+
+
+VsCode Source control -> Initial -> Commit -> Publish branch (Sync)

@@ -1,5 +1,3 @@
-// src\providers\ThemeProvider.tsx
-
 "use client";
 
 // ThemeProvider.tsx
