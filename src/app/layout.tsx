@@ -4,7 +4,7 @@ import { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import AuthProvider from "../components/AuthProvider";
-import { ThemeProvider } from "../providers/ThemeProvider";
+import ThemeProvider from "../components/ThemeProvider";
 import PublicLayout from './(public)/layout';
 import PrivateLayout from './(private)/layout';
 
@@ -27,13 +27,13 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <ThemeProvider>
-            <main >
-              {children}
-            </main>
-            <Navbar />
+            <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+              <Navbar />
+              <main style={{ flexGrow: 1 }}>{children}</main>
+            </div>
           </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
   );
-}; 
+}
