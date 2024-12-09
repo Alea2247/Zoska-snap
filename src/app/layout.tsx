@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import AuthProvider from "../components/AuthProvider";
+import { ThemeProvider } from "../providers/ThemeProvider";
 import PublicLayout from './(public)/layout';
 import PrivateLayout from './(private)/layout';
 
@@ -22,19 +23,17 @@ export default function RootLayout({
   const Layout = isPrivateRoute ? PrivateLayout : PublicLayout;
 
   return (
-    
-      <html lang="sk">
-        <body>
-          <AuthProvider>
-            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-              <main style={{ flexGrow: 1 }}>
-                <Layout>{children}</Layout>
-              </main>
-            </div>
-            <Navbar /> 
-          </AuthProvider>
-        </body>
-      </html>
-    
+    <html lang="sk">
+      <body>
+        <AuthProvider>
+          <ThemeProvider>
+            <main >
+              {children}
+            </main>
+            <Navbar />
+          </ThemeProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
-}
+}; 
