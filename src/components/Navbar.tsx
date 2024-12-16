@@ -13,6 +13,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
+import InfoIcon from "@mui/icons-material/Info";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { useRouter } from "next/navigation";
@@ -30,17 +31,15 @@ const Navbar = () => {
 
   const nonAuthPaths = [
     { label: "Domov", value: "/", icon: <HomeIcon /> },
-    { label: "Podmienky", value: "/podmienky", icon: <AddCircleIcon /> },
-    { label: "GDPR", value: "/gdpr", icon: <HomeIcon /> },
-    { label: "O-nas", value: "/o-nas", icon: <HomeIcon /> },
+    { label: "O nás", value: "/o-nas", icon: <InfoIcon /> },
     { label: "Registrácia", value: "/auth/registracia", icon: <AppRegistrationIcon /> },
     { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> },
   ];
 
   const authPaths = [
-    { label: "Domov", value: "/", icon: <HomeIcon /> },
+    { label: "Domov", value: "/prispevky", icon: <HomeIcon /> },
     { label: "Hľadať", value: "/hladat", icon: <SearchIcon /> },
-    { label: "Prispevok", value: "/prispevok", icon: <AddCircleIcon /> },
+    { label: "Pridať príspevok", value: "/pridat", icon: <AddCircleIcon /> },
     {
       label: "Profil",
       value: "/profile",

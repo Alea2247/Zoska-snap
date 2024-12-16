@@ -1,12 +1,10 @@
 // src/sections/SignInView.tsx
 
+// prihlasenie
+
 "use client";
 
-import {
-    Button,
-    Container,
-    Typography,
-  } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
   import { signIn } from "next-auth/react";
   import GoogleIcon from "@mui/icons-material/Google";
 
@@ -28,6 +26,11 @@ export default function SignInView() {
       {/* Logo / Title */}
       <Typography variant="h5" sx={{ mb: 3 }}>
         Prihlásenie
+      </Typography>
+
+      {/* Sign-in link */}
+      <Typography variant="body1" sx={{ mb: 6 }}>
+        Ešte nemáte účet? <a href="/auth/registracia">Registrujte sa</a>
       </Typography>
 
       {/* Google Sign Up */}

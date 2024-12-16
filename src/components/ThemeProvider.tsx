@@ -1,9 +1,9 @@
 "use client";
 
-// ThemeProvider.tsx
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { lightTheme, darkTheme } from "../styles/themes"; // Import your themes
 
 interface ColorModeContextType {
   toggleColorMode: () => void;
@@ -24,44 +24,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
 
-  const theme = createTheme({
-    palette: {
-      mode,
-      primary: {
-        main: mode === "light" ? '#7b1fa2' : '#b39ddb', // Muted violet colors
-      },
-      background:
-        {default: mode === "light" ? '#ffffff' : '#303030', // Lighter background in dark mode
-        paper: mode === "light" ? '#ffffff' : '#424242', // Lighter paper background in dark mode}   
-        },
-    },
-    components: {
-      MuiBottomNavigationAction: {
-        styleOverrides: {
-          root: {
-            '&.Mui-selected': {
-              color: mode === "light" ? '#7b1fa2' : '#b39ddb', // Muted violet colors
-            },
-            '&:hover': {
-              color: mode === "light" ? '#7b1fa2' : '#b39ddb', // Muted violet colors
-            },
-          },
-        },
-      },
-      MuiCard: {
-        styleOverrides: {
-          root: {
-            ...(mode === 'light' && {
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Black box shadow in light mode
-            }),
-            ...(mode === 'dark' && {
-              boxShadow: '0 4px 8px rgba(255, 255, 255, 0.2)', // White box shadow in dark mode
-            }),
-          },
-        },
-      },
-    },
-  });
+  // Select the appropriate theme based on the mode
+  const theme = mode === "light" ? lightTheme : darkTheme;
 
   return (
     <ColorModeContext.Provider value={{ toggleColorMode, mode }}>

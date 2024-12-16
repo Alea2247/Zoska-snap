@@ -97,3 +97,6 @@ git remote -v
 
 
 VsCode Source control -> Initial -> Commit -> Publish branch (Sync)
+
+npm install
+npm install @mui/material @emotion/react @emotion/styled
