@@ -41,7 +41,6 @@ const Navbar = () => {
     { label: "Domov", value: "/", icon: <HomeIcon /> },
     { label: "Hľadať", value: "/hladat", icon: <SearchIcon /> },
     { label: "Prispevok", value: "/prispevok", icon: <AddCircleIcon /> },
-    { label: "Notifikacie", value: "/notifikacie", icon: <SearchIcon /> },
     {
       label: "Profil",
       value: "/profile",

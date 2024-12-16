@@ -6,13 +6,13 @@ const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#E43667',
+      main: '#176B87',
     },
     background: {
-      default: '#f4f6f8',
+      default: '#DAFFFB',
     },
     text: {
-        primary: '#000000',
+        primary: '#001C30',
     },
 }});
 
@@ -20,13 +20,13 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#E60A48',
+      main: '#176B87',
     },
     background: {
-      default: '#121212',
+      default: '#001C30',
     },
     text: {
-        primary: '#ffffff',
+        primary: '#DAFFFB',
     },
 }});
 
