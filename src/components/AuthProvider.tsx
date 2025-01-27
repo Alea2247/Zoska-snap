@@ -1,4 +1,3 @@
-
 // src/components/AuthProvider.tsx
 
 "use client";

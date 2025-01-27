@@ -1,7 +1,9 @@
-
 // src/sections/NonAuthHomeView.tsx
 
-import { Container, Typography } from "@mui/material";
+// neprihlaseny
+
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 export default function NonAuthHomeView() {
   return (

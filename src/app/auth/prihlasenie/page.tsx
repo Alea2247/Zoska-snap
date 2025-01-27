@@ -1,6 +1,4 @@
-
 // src/app/prihlasenie/page.tsx
-
 
 import SignInView from "../../../sections/SignInView";
 

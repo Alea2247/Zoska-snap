@@ -1,4 +1,3 @@
-
 // src/app/api/auth/[...nextauth]/authOptions.ts
 
 import { NextAuthOptions } from "next-auth";

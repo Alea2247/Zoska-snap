@@ -1,4 +1,3 @@
-
 // src/app/verify/page.tsx
 
 import SignVerifyView from "@/sections/SignVerifyView";

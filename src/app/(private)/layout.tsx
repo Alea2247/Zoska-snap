@@ -1,3 +1,5 @@
+//src\app\(private)\layout.tsx
+
 import AuthGuard from "@/components/AuthGuard";
 
 export default function PrivateLayout({

@@ -1,6 +1,6 @@
 // src/sections/SignUpView.tsx
 
-// registracia
+// registrovanie
 
 "use client";
 
