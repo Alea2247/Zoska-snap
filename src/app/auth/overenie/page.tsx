@@ -1,9 +1,9 @@
-// src/app/verify/page.tsx
+// src\app\auth\overenie\page.tsx
 
-import SignVerifyView from "@/sections/SignVerifyView";
+import SignVerifyView from "../../../sections/SignVerifyView";
 
 export const metadata = { title: "Overenie účtu | Kutyl s.r.o." };
 
-export default function Overenie() {
+export default function VerifyPage() {
   return <SignVerifyView />;
 }

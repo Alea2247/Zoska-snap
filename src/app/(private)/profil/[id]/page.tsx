@@ -1,11 +1,16 @@
-// src/app/(private)/profile/[id]/page.tsx
+// src/app/profil/[id]/page.tsx
 
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
-export const metadata = {title: 'Detail profilu | Kutyl s.r.o.'};
+export const metadata = { title: "Detail profilu | Kutyl s.r.o."}
 
 export default function ProfileDetail() {
   return (
-    <Typography>Detaily o profile</Typography>
+
+    <Container>
+      <Typography>Detail profilu</Typography>
+    </Container>
+
   );
 }

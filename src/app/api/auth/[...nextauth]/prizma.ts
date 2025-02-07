@@ -1,4 +1,4 @@
-// src\app\api\auth\[...nextauth]\prisma.ts
+// src\app\api\auth\[...nextauth]\prizma.ts
 
 import { PrismaClient } from "@prisma/client"
  

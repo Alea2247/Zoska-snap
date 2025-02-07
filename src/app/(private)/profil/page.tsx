@@ -1,16 +1,16 @@
-
 // src/app/profil/page.tsx
 
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
-import Typography from "@mui/material/Typography";
+export const metadata = { title: "Zoznam profilov | Kutyl s.r.o."}
 
-export const metadata = { title: "Moj profil | Kutyl s.r.o." };
-
-export default function Profil() {
-
+export default function Profilelisting() {
   return (
 
-      <Typography> Môj profilik </Typography>
+    <Container>
+      <Typography>Listing profilov</Typography>
+    </Container>
 
   );
 }

@@ -1,15 +1,8 @@
-//src\app\(private)\layout.tsx
+import React from "react";  
 
-import AuthGuard from "@/components/AuthGuard";
 
-export default function PrivateLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    return (
-        <AuthGuard>
-            {children}
-        </AuthGuard>
-    );
+import Watchdog from "../../components/Watchdog";
+
+export default function PrivateLayout({children} : {children: React.ReactNode }) {
+    return <Watchdog>{children} </Watchdog>
 }

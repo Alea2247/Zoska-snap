@@ -4,6 +4,6 @@ import SignUpView from "../../../sections/SignUpView";
 
 export const metadata = { title: "Registrácia užívateľa | Kutyl s.r.o." };
 
-export default function Registracia() {
+export default function SignUpPage() {
   return <SignUpView />;
 }

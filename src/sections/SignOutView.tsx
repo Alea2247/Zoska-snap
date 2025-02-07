@@ -1,7 +1,5 @@
 // src/sections/SignOutView.tsx
 
-// odhlasovanie
-
 "use client";
 
 import { signOut } from "next-auth/react";
@@ -25,7 +23,7 @@ export default function SignOutView() {
       <Typography variant="h5" sx={{ mb: 3 }}>
         Naozaj sa chcete odhlásiť?
       </Typography>
-      <Button variant="contained" onClick={() => signOut()}>
+      <Button variant="contained" onClick={() => signOut({callbackUrl: "/"})}>
         Odhlásiť sa
       </Button>
     </Container>

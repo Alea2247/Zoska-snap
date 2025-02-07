@@ -1,83 +1,114 @@
-// src\components\Navbar.tsx
-
 "use client";
 
-import React from "react";
+import * as React from "react";
 import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
   Avatar,
+  IconButton,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LoginIcon from "@mui/icons-material/Login";
+import AccessibilityIcon from "@mui/icons-material/Accessibility";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
-import InfoIcon from "@mui/icons-material/Info";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import { useRouter } from "next/navigation";
+import Brightness7Icon from "@mui/icons-material/Brightness7"; // Sun icon
+import Brightness4Icon from "@mui/icons-material/Brightness4"; // Moon icon
+import { useRouter, usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useColorMode } from "./ThemeProvider";
+import { useThemeToggle } from "../components/ThemeProvider";
 
-const Navbar = () => {
-  const { toggleColorMode, mode } = useColorMode();
+export default function Navbar() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const pathname = usePathname();
+  const { data: session, status } = useSession();
+  const toggleTheme = useThemeToggle(); // Theme toggle function
 
-  const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
-    router.push(newValue);
+  // Load theme preference from localStorage on mount
+  const [isSun, setIsSun] = React.useState(true);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme");
+      setIsSun(savedTheme !== "dark"); // Ensure consistency with stored theme
+    }
+  }, []);
+
+  // Toggle the sun/moon icon and theme mode
+  const handleThemeToggle = () => {
+    setIsSun((prev) => {
+      const newTheme = !prev;
+      localStorage.setItem("theme", newTheme ? "light" : "dark"); // Save the theme
+      return newTheme;
+    });
+    toggleTheme();
+  };
+
+  const handleNavigation = (_: React.SyntheticEvent, newValue: string) => {
+    if (
+      !session &&
+      newValue !== "/auth/registracia" &&
+      newValue !== "/auth/prihlasenie" &&
+      newValue !== "/" &&
+      newValue !== "/o-nas"
+    ) {
+      router.push("/auth/registracia");
+    } else {
+      router.push(newValue);
+    }
   };
 
   const nonAuthPaths = [
     { label: "Domov", value: "/", icon: <HomeIcon /> },
-    { label: "O nás", value: "/o-nas", icon: <InfoIcon /> },
+    { label: "O nás", value: "/o-nas", icon: <AccessibilityIcon /> },
     { label: "Registrácia", value: "/auth/registracia", icon: <AppRegistrationIcon /> },
     { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> },
   ];
 
   const authPaths = [
-    { label: "Domov", value: "/prispevky", icon: <HomeIcon /> },
+    { label: "Domov", value: "/", icon: <HomeIcon /> },
     { label: "Hľadať", value: "/hladat", icon: <SearchIcon /> },
-    { label: "Pridať príspevok", value: "/pridat", icon: <AddCircleIcon /> },
+    { label: "Pridať", value: "/pridat", icon: <AddCircleIcon /> },
     {
       label: "Profil",
-      value: "/profile",
-      icon: session?.user?.image ? (
-        <Avatar alt={session?.user?.name || "User"} src={session?.user?.image || undefined} />
-      ) : (
-        <Avatar>{session?.user?.name?.charAt(0) || "U"}</Avatar>
+      value: "/profil",
+      icon: (
+        <Avatar alt={session?.user?.name || "User"} src={session?.user?.image || undefined}>
+          {!session?.user?.image && (session?.user?.name?.charAt(0) || "U")}
+        </Avatar>
       ),
     },
     { label: "Odhlásiť", value: "/auth/odhlasenie", icon: <LogoutIcon /> },
   ];
 
-  const paths = session ? authPaths : nonAuthPaths;
+  const navigationPaths = status === "authenticated" ? authPaths : nonAuthPaths;
 
   return (
-    <>
-      <Box sx={{ width: "100%", position: "fixed", bottom: 0 }}>
-        <BottomNavigation showLabels>
-          {paths.map((path) => (
-            <BottomNavigationAction
-              key={path.value}
-              label={path.label}
-              value={path.value}
-              icon={path.icon}
-              onClick={(event) => handleNavigation(event, path.value)}
-            />
-          ))}
+    <Box sx={{ width: "100%", position: "fixed", bottom: 0 }}>
+      <BottomNavigation showLabels value={pathname} onChange={handleNavigation}>
+        {navigationPaths.map((path) => (
           <BottomNavigationAction
-            label=""
-            icon={mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
-            onClick={toggleColorMode}
+            key={path.value}
+            label={path.label}
+            value={path.value}
+            icon={path.icon}
+            sx={{
+              color: pathname === path.value ? "blue" : "inherit",
+            }}
           />
-        </BottomNavigation>
-      </Box>
-    </>
+        ))}
+        {/* Sun/Moon Toggle */}
+        <IconButton
+          onClick={handleThemeToggle}
+          sx={{ position: "absolute", bottom: "10px", right: "10px" }}
+          color="inherit"
+        >
+          {isSun ? <Brightness7Icon fontSize="large" /> : <Brightness4Icon fontSize="large" />}
+        </IconButton>
+      </BottomNavigation>
+    </Box>
   );
-};
-
-export default Navbar;
+}

@@ -1,10 +1,9 @@
-// src/app/page.tsx
-
+// src/app/(home)/page.tsx
 
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import AuthHomeView from "@/sections/AuthHomeView";
-import NonAuthHomeView from "@/sections/NonAuthHomeView";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import NonAuthHomeView from "../../sections/NonAuthHomeView";
+import AuthHomeView from "../../sections/AuthHomeView";
 
 export const metadata = { title: "Domov | Kutyl s.r.o." };
 
@@ -15,8 +14,8 @@ export default async function HomePage() {
     if (!session) {
       return <NonAuthHomeView />;
     }
-
-    return <AuthHomeView session={session} />;
+    else {
+      return <AuthHomeView session={session} />;
     }
 
   } catch (error) {

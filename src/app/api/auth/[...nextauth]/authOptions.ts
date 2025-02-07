@@ -1,9 +1,11 @@
-// src/app/api/auth/[...nextauth]/authOptions.ts
+// auth/[...nextauth]/authOptions.ts
 
-import { NextAuthOptions } from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { DefaultUser, NextAuthOptions } from "next-auth";
+import { prisma } from "./prizma";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "./prisma"
+import { Session } from "next-auth";
+
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -14,15 +16,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true,
+  debug: true, // Enable/disable detailed logging
   pages: {
-    signIn: '/auth/prihlasenie',
-    signOut: '/auth/odhlasenie',
+    signIn: "/auth/prihlasenie",
+    signOut: "/auth/odhlasenie",
   },
   callbacks: {
     async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-      // Redirect to home page after sign-in
-      return baseUrl || url; // baseUrl is automatically set from NEXTAUTH_URL in .env
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
+    async session({ session, user }: { session: Session; user: DefaultUser }) {
+      session.user = user; // Include user info in the session
+      return session;
     },
   },
 };

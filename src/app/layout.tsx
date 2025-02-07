@@ -4,29 +4,29 @@ import { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import AuthProvider from "../components/AuthProvider";
-import ThemeProvider from "../components/ThemeProvider";
+import ThemeProviderWrapper from "../components/ThemeProvider";
 
 export const metadata: Metadata = {
-  title: "SnapZoška",
-  description: "Created by students of SPŠE Zochova 9, Bratislava",
+  title: "fekete-snap-zoska",
+  description: "Created by Sasenka Masenka",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="sk">
       <body>
-        <AuthProvider>
-          <ThemeProvider>
+        <ThemeProviderWrapper> {/* Wrap everything in the theme provider */}
+          <AuthProvider>
             <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-              <Navbar />
               <main style={{ flexGrow: 1 }}>{children}</main>
             </div>
-          </ThemeProvider>
-        </AuthProvider>
+            <Navbar />
+          </AuthProvider>
+        </ThemeProviderWrapper>
       </body>
     </html>
   );

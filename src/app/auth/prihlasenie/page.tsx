@@ -4,6 +4,6 @@ import SignInView from "../../../sections/SignInView";
 
 export const metadata = { title: "Prihlásenie užívateľa | Kutyl s.r.o." };
 
-export default function Prihlasenie() {
+export default function SignInPage() {
   return <SignInView />;
 }

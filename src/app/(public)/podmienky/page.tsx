@@ -1,55 +1,35 @@
-// src/app/(public)/podmienky/page.tsx
+import { Metadata } from "next";
+import dynamic from "next/dynamic";
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+export const metadata: Metadata = { title: "Podmienky používania | Kutyl s.r.o." };
 
-// Data for the Terms and Conditions
-const termsData = {
-  title: "Podmienky používania",
-  introduction:
-    "Tieto podmienky upravujú používanie aplikácie ZoškaSnap. Pred použitím našej aplikácie si prosím dôkladne prečítajte tieto podmienky.",
-  sections: [
-    {
-      heading: "Používanie aplikácie",
-      text: "Užívateľ sa zaväzuje používať aplikáciu v súlade so zákonmi a dobrými mravmi.",
-    },
-    {
-      heading: "Ochrana údajov",
-      text: "Vaše údaje sú spracovávané v súlade s našimi zásadami ochrany osobných údajov.",
-    },
-  ],
-  footer: "Ďakujeme, že dodržiavate podmienky používania našej aplikácie.",
-};
+const TermsClient = dynamic(() => import("../../../components/GDPRClient"), {
+  ssr: false, // Ensures it's client-side only
+});
 
-export const metadata = { title: 'Podmienky | ZoškaSnap' };
-
-export default function TermsConditions() {
+export default function TermsOfService() {
   return (
-    <Box sx={{ p: 3 }}>
-      {/* Title */}
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        {termsData.title}
-      </Typography>
-
-      {/* Introduction */}
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        {termsData.introduction}
-      </Typography>
-
-      {/* Sections */}
-      {termsData.sections.map((section, index) => (
-        <Box key={index} sx={{ mb: 3 }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            {section.heading}
-          </Typography>
-          <Typography variant="body1">{section.text}</Typography>
-        </Box>
-      ))}
-
-      {/* Footer */}
-      <Typography variant="body2" sx={{ mt: 4, fontStyle: 'italic' }}>
-        {termsData.footer}
-      </Typography>
-    </Box>
+    <div style={{ display: "flex", justifyContent: "left", alignItems: "left", height: "100vh", textAlign: "left", padding: "20px" }}>
+      <div>
+        {/* Terms of Service Text */}
+        <h1>Podmienky používania</h1>
+        <p style={{ fontSize: "1.1rem", maxWidth: "600px", margin: "0 auto" }}>
+          Tieto podmienky používania upravujú pravidlá a podmienky používania platformy ZoškaSnap. Používaním našich služieb súhlasíte s týmito podmienkami.
+          Zaväzujete sa používať našu platformu zodpovedne, neporušovať práva iných používateľov a dodržiavať všetky platné zákony.
+          Vyhradzujeme si právo kedykoľvek tieto podmienky zmeniť.
+        </p>
+        <p style={{ fontSize: "1.1rem", maxWidth: "600px", margin: "0 auto", marginTop: "20px" }}>
+          Používateľ nesmie nahrávať, zdieľať alebo publikovať obsah, ktorý je nezákonný, urážlivý, ohováračský, diskriminačný alebo porušuje práva iných osôb. Každý používateľ je zodpovedný za obsah, ktorý zverejňuje na platforme.
+          Akékoľvek porušenie podmienok môže viesť k pozastaveniu alebo trvalému zrušeniu účtu používateľa.
+        </p>
+        <p style={{ fontSize: "1.1rem", maxWidth: "600px", margin: "0 auto", marginTop: "20px" }}>
+          Platforma ZoškaSnap si vyhradzuje právo kedykoľvek upraviť alebo zmeniť funkcie, služby a podmienky používania. O významných zmenách budeme používateľov informovať prostredníctvom e-mailu alebo notifikácií v aplikácii.
+          Pokračovaním v používaní platformy po týchto zmenách súhlasíte s aktualizovanými podmienkami.
+        </p>
+        
+        {/* Client-side back button */}
+        <TermsClient />
+      </div>
+    </div>
   );
 }

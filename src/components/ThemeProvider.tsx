@@ -1,42 +1,40 @@
-// src\components\ThemeProvider.tsx
-
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { lightTheme, darkTheme } from "../styles/themes"; // Import your themes
+import React, { useState, useEffect, createContext, useContext } from "react";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { lightTheme, darkTheme } from "../configs/theme";
 
-interface ColorModeContextType {
-  toggleColorMode: () => void;
-  mode: "light" | "dark";
-}
+const ThemeToggleContext = createContext<() => void>(() => {});
+export const useThemeToggle = () => useContext(ThemeToggleContext);
 
-const ColorModeContext = createContext<ColorModeContextType>({
-  toggleColorMode: () => {},
-  mode: "light",
-});
+const ThemeProviderWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-export const useColorMode = () => useContext(ColorModeContext);
+  // Load theme from localStorage when the component mounts
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setIsDarkMode(true);
+    }
+  }, []);
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<"light" | "dark">("light");
-
-  const toggleColorMode = () => {
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  // Toggle theme and store the preference
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => {
+      const newTheme = !prev;
+      localStorage.setItem("theme", newTheme ? "dark" : "light"); // Save preference
+      return newTheme;
+    });
   };
 
-  // Select the appropriate theme based on the mode
-  const theme = mode === "light" ? lightTheme : darkTheme;
-
   return (
-    <ColorModeContext.Provider value={{ toggleColorMode, mode }}>
-      <MuiThemeProvider theme={theme}>
+    <ThemeToggleContext.Provider value={toggleTheme}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <CssBaseline />
         {children}
-      </MuiThemeProvider>
-    </ColorModeContext.Provider>
+      </ThemeProvider>
+    </ThemeToggleContext.Provider>
   );
 };
 
-export default ThemeProvider;
+export default ThemeProviderWrapper;

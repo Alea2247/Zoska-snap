@@ -1,7 +1,3 @@
-// src/sections/SignUpView.tsx
-
-// registrovanie
-
 "use client";
 
 import {
@@ -10,25 +6,31 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
+  Box,
 } from "@mui/material";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "@mui/icons-material/Google";
-import NextLink from "next/link";
-import Alert from "@mui/material/Alert";
-import { useState } from "react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function SignUpView() {
-  // State for error message
-  const [error, setError] = useState<string | null>(null);
+  const [gdprChecked, setGdprChecked] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [baseUrl, setBaseUrl] = useState("");
 
-  // Handle sign up with Google and set error on failure
-  const handleGoogleSignUp = async () => {
-    try {
-      await signIn("google");
-      setError(null); // Reset error if sign-in is successful
-    } catch (err) {
-      setError("Something went wrong with Google sign-up.");
+
+  useEffect(() => {
+    setBaseUrl(window.location.origin); // This ensures baseUrl is set only on the client
+  }, []);
+
+  const handleSignUp = () => {
+    if (!gdprChecked) {
+      setShowAlert(true); // Show alert if GDPR is not checked
+      return;
     }
+
+    setShowAlert(false); // Hide alert if GDPR is checked
+    signIn("google", {callbackUrl: `${baseUrl}/prispevok`,});
   };
 
   return (
@@ -51,50 +53,63 @@ export default function SignUpView() {
       </Typography>
 
       {/* Sign-in link */}
-      <Typography variant="body1" sx={{ mb: 4 }}>
+      <Typography variant="body1" sx={{ mb: 6 }}>
         Už máte účet?{" "}
-        <NextLink href="/auth/prihlasenie" passHref>
-          <Typography component="span" color="primary" sx={{ cursor: "pointer" }}>
-            Prihláste sa
-          </Typography>
-        </NextLink>
+        <Link href="/auth/prihlasenie" style={{ color: "blue", textDecoration: "underline" }}>
+          Prihláste sa
+        </Link>
       </Typography>
 
-      {/* Error alert */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
-
-      {/* GDPR and Terms Checkbox */}
+      {/* GDPR Consent */}
       <FormControlLabel
-        control={<Checkbox required color="primary" />}
-        label={
-          <>
-            Súhlasím s{" "}
-            <NextLink href="/podmienky" passHref>
-              <Typography component="span" color="primary" sx={{ cursor: "pointer" }}>
-                podmienkami používania
-              </Typography>
-            </NextLink>{" "}
-            <NextLink href="/gdpr" passHref>
-              <Typography component="span" color="primary" sx={{ cursor: "pointer" }}>
-                zásadami ochrany osobných údajov
-              </Typography>
-            </NextLink>
-            .
-          </>
+        control={
+          <Checkbox
+            checked={gdprChecked}
+            onChange={(e) => setGdprChecked(e.target.checked)}
+            color="primary"
+          />
         }
-        sx={{ mb: 3 }}
+        label={
+          <Typography>
+            Súhlas s{" "}
+            <Link href="/gdpr" style={{ color: "blue", textDecoration: "underline" }}>
+              GDPR
+            </Link>
+            {" "}a{" "}
+            <Link href="/podmienky" style={{ color: "blue", textDecoration: "underline" }}>
+              Podmienkami používania
+            </Link>
+          </Typography>
+        }
+        sx={{ mb: 2 }}
       />
+
+      {/* Conditional Alert */}
+      {showAlert && (
+        <Box
+          sx={{
+            bgcolor: "#fdecea",
+            color: "#d32f2f",
+            border: "1px solid #d32f2f",
+            borderRadius: 1,
+            p: 2,
+            textAlign: "center",
+            mb: 2,
+            width: "100%",
+          }}
+        >
+          <Typography>
+            Prosím, súhlaste s podmienkami GDPR pred pokračovaním.
+          </Typography>
+        </Box>
+      )}
 
       {/* Google Sign Up */}
       <Button
         variant="outlined"
         fullWidth
         startIcon={<GoogleIcon />}
-        onClick={handleGoogleSignUp} // Use the custom sign-up handler
+        onClick={handleSignUp}
         sx={{ mb: 1 }}
       >
         Registrovať sa účtom Google
