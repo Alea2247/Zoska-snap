@@ -17,6 +17,8 @@ export default async function HomePage() {
     }
 
     return <AuthHomeView session={session} />;
+    }
+
   } catch (error) {
     console.error("Error fetching session:", error);
     return <NonAuthHomeView />;
