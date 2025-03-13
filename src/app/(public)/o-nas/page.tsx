@@ -1,5 +1,4 @@
 import { Container, Typography, Box, Button } from "@mui/material";
-import Link from "next/link"; // Import the Link component
 
 export default function NonAuthHomeView() {
   return (
