@@ -1,13 +1,11 @@
-// src\app\(private)\hladat\page.tsx
-
 "use client"; // Client-side rendering
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { Box, Paper, Avatar, Chip } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Box, Avatar, CircularProgress, List, ListItemAvatar, ListItemText, Divider, ListItemButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 // Define TypeScript types
 type UserProfile = {
@@ -24,7 +22,7 @@ type User = {
 
 export default function Find() {
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState<User[]>([]); // Type users correctly
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -50,70 +48,95 @@ export default function Find() {
   }, [search]);
 
   return (
-    <Container sx={{ mt: 4, pb: 8 }}>
-      <Typography variant="h4" gutterBottom>
-        Hľadanie používateľov
-      </Typography>
-
+    <Container maxWidth="sm" sx={{ py: 4 }}>
       {/* Search Bar */}
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Hľadať podľa mena alebo lokality..."
-        sx={{ mb: 3 }}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
-      {loading && <CircularProgress sx={{ display: "block", mx: "auto", my: 2 }} />}
-
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-          gap: 3,
-        }}
-      >
-        {users.map((user) => (
-          <Paper
-            key={user.id}
-            elevation={3}
-            sx={{
-              p: 2,
-              borderRadius: 3,
-              textAlign: "center",
-              transition: "0.3s",
-              "&:hover": { boxShadow: 6, transform: "scale(1.05)" },
-            }}
-          >
-            <Avatar
-              src={user.profile?.avatarUrl || "/default-avatar.png"}
-              alt={user.name || "User"}
-              sx={{ width: 80, height: 80, mx: "auto", mb: 1 }}
-            />
-            <Typography variant="h6">{user.name || "Neznámy užívateľ"}</Typography>
-            <Typography variant="body2" color="textSecondary">
-              {user.profile?.location || "Neznáma lokalita"}
-            </Typography>
-            <Box sx={{ mt: 1, display: "flex", gap: 1, flexWrap: "wrap", justifyContent: "center" }}>
-              {user.profile?.interests?.length ? (
-                user.profile.interests.map((tag, index) => (
-                  <Chip key={index} label={tag} size="small" />
-                ))
-              ) : (
-                <Typography variant="caption" color="textSecondary">
-                  Žiadne záujmy
-                </Typography>
-              )}
-            </Box>
-          </Paper>
-        ))}
+      <Box sx={{ position: 'relative', mb: 3 }}>
+        <SearchIcon 
+          sx={{ 
+            position: 'absolute', 
+            left: 12, 
+            top: '50%', 
+            transform: 'translateY(-50%)',
+            color: 'text.secondary'
+          }} 
+        />
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Hľadať používateľov..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              pl: 4,
+              borderRadius: 2,
+              backgroundColor: 'background.paper',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'divider',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'primary.main',
+            },
+          }}
+        />
       </Box>
 
-      {!loading && users.length === 0 && (
-        <Typography variant="body1" textAlign="center" sx={{ mt: 4 }}>
-          Žiadni používatelia neboli nájdení.
-        </Typography>
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+          {users.map((user, index) => (
+            <React.Fragment key={user.id}>
+              <ListItemButton
+                sx={{ 
+                  py: 2,
+                  '&:hover': {
+                    backgroundColor: 'action.hover',
+                  }
+                }}
+              >
+                <ListItemAvatar>
+                  <Avatar
+                    src={user.profile?.avatarUrl || "/default-avatar.png"}
+                    alt={user.name || "User"}
+                    sx={{ width: 56, height: 56 }}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                      {user.name || "Neznámy užívateľ"}
+                    </Typography>
+                  }
+                  secondary={
+                    <Box>
+                      <Typography variant="body2" color="text.secondary">
+                        {user.profile?.location || "Neznáma lokalita"}
+                      </Typography>
+                      {user.profile?.interests && user.profile.interests.length > 0 && (
+                        <Typography variant="caption" color="text.secondary">
+                          {user.profile.interests.join(" • ")}
+                        </Typography>
+                      )}
+                    </Box>
+                  }
+                />
+              </ListItemButton>
+              {index < users.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
+        </List>
+      )}
+
+      {!loading && search.trim() && users.length === 0 && (
+        <Box sx={{ textAlign: 'center', py: 4 }}>
+          <Typography variant="body1" color="text.secondary">
+            Žiadni používatelia neboli nájdení.
+          </Typography>
+        </Box>
       )}
     </Container>
   );

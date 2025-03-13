@@ -3,7 +3,8 @@
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-export const metadata = { title: "Detail profilu | Kutyl s.r.o."}
+export const metadata = { title: "Detail profilov | ZoškaSnap"}
+
 
 export default function ProfileDetail() {
   return (

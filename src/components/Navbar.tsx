@@ -7,6 +7,10 @@ import {
   Box,
   Avatar,
   IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -17,8 +21,9 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Brightness7Icon from "@mui/icons-material/Brightness7"; // Sun icon
 import Brightness4Icon from "@mui/icons-material/Brightness4"; // Moon icon
+import PersonIcon from "@mui/icons-material/Person";
 import { useRouter, usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useThemeToggle } from "../components/ThemeProvider";
 
 export default function Navbar() {
@@ -26,6 +31,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const toggleTheme = useThemeToggle(); // Theme toggle function
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   // Load theme preference from localStorage on mount
   const [isSun, setIsSun] = React.useState(true);
@@ -45,6 +52,24 @@ export default function Navbar() {
       return newTheme;
     });
     toggleTheme();
+  };
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfileClick = () => {
+    handleMenuClose();
+    router.push("/profil");
+  };
+
+  const handleLogoutClick = async () => {
+    handleMenuClose();
+    await signOut({ redirect: true, callbackUrl: "/" });
   };
 
   const handleNavigation = (_: React.SyntheticEvent, newValue: string) => {
@@ -69,19 +94,27 @@ export default function Navbar() {
   ];
 
   const authPaths = [
-    { label: "Domov", value: "/", icon: <HomeIcon /> },
+    { label: "Domov", value: "/prispevok", icon: <HomeIcon /> },
     { label: "Hľadať", value: "/hladat", icon: <SearchIcon /> },
     { label: "Pridať", value: "/pridat", icon: <AddCircleIcon /> },
     {
       label: "Profil",
-      value: "/profil",
+      value: "",
       icon: (
-        <Avatar alt={session?.user?.name || "User"} src={session?.user?.image || undefined}>
-          {!session?.user?.image && (session?.user?.name?.charAt(0) || "U")}
-        </Avatar>
+        <IconButton
+          onClick={handleProfileMenuOpen}
+          size="small"
+          sx={{ ml: 2 }}
+          aria-controls={open ? 'profile-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+        >
+          <Avatar alt={session?.user?.name || "User"} src={session?.user?.image || undefined}>
+            {!session?.user?.image && (session?.user?.name?.charAt(0) || "U")}
+          </Avatar>
+        </IconButton>
       ),
     },
-    { label: "Odhlásiť", value: "/auth/odhlasenie", icon: <LogoutIcon /> },
   ];
 
   const navigationPaths = status === "authenticated" ? authPaths : nonAuthPaths;
@@ -109,6 +142,30 @@ export default function Navbar() {
           {isSun ? <Brightness7Icon fontSize="large" /> : <Brightness4Icon fontSize="large" />}
         </IconButton>
       </BottomNavigation>
+
+      {/* Profile Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        id="profile-menu"
+        open={open}
+        onClose={handleMenuClose}
+        onClick={handleMenuClose}
+        transformOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
+        <MenuItem onClick={handleProfileClick}>
+          <ListItemIcon>
+            <PersonIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Moj profil</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleLogoutClick}>
+          <ListItemIcon>
+            <LogoutIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText>Odhlasit</ListItemText>
+        </MenuItem>
+      </Menu>
     </Box>
   );
 }

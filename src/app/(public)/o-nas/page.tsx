@@ -27,63 +27,45 @@ export default function NonAuthHomeView() {
           Sme aktívni na sociálnych sieťach, kde sa môžete pripojiť k našej komunite.
         </Typography>
         <Box sx={{ mt: 3 }}>
-          <Link href="https://www.friv.com/" passHref>
-            <Button
-              component="a"
-              variant="outlined"
-              color="primary"
-              sx={{
-                mx: 1,
-                mb: 2,
-                textDecoration: 'none', // Ensures no underline
-                "&:hover": {
-                  textDecoration: 'none', // Ensures no underline on hover
-                }
-              }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Only Fans
-            </Button>
-          </Link>
-          <Link href="https://www.instagram.com/erzika_sro/" passHref>
-            <Button
-              component="a"
-              variant="outlined"
-              color="primary"
-              sx={{
-                mx: 1,
-                mb: 2,
-                textDecoration: 'none', // Ensures no underline
-                "&:hover": {
-                  textDecoration: 'none', // Ensures no underline on hover
-                }
-              }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </Button>
-          </Link>
-          <Link href="https://www.youtube.com/results?search_query=kutyil+sro" passHref>
-            <Button
-              component="a"
-              variant="outlined"
-              color="primary"
-              sx={{
-                mx: 1,
-                mb: 2,
-                textDecoration: 'none', // Ensures no underline
-                "&:hover": {
-                  textDecoration: 'none', // Ensures no underline on hover
-                }
-              }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Youtube
-            </Button>
-          </Link>
+          <Button
+            href="https://www.friv.com/"
+            variant="outlined"
+            color="primary"
+            sx={{
+              mx: 1,
+              mb: 2,
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Only Fans
+          </Button>
+          <Button
+            href="https://www.instagram.com/erzika_sro/"
+            variant="outlined"
+            color="primary"
+            sx={{
+              mx: 1,
+              mb: 2,
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Instagram
+          </Button>
+          <Button
+            href="https://www.youtube.com/results?search_query=kutyil+sro"
+            variant="outlined"
+            color="primary"
+            sx={{
+              mx: 1,
+              mb: 2,
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Youtube
+          </Button>
         </Box>
       </Box>
     </Container>
