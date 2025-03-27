@@ -90,7 +90,7 @@ git clone https://github.com/Alea2247/Zoska-snap
 cd snap-zoska
 git init
 git branch -m main
-git config user.name "ALea2247"
+git config user.name "Alea2247"
 git config user.email "alexandraachbergerova2007@gmail.com"
 git remote add origin https://github.com/Alea2247/Zoska-snap.git
 git remote -v
