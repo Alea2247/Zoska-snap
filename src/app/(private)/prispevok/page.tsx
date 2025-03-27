@@ -2,7 +2,7 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { getPosts } from "./actions";
-import Post from "../../../components/Post";
+import Post from "@/components/Post";
 
 type Post = {
   id: string;
@@ -32,6 +32,7 @@ export default async function PostsList() {
         {posts.map((post: Post) => (
           <Post
             key={post.id}
+            id={post.id}
             username={post.user.name || "Anonymous"}
             profilePicture={post.user.image || undefined}
             imageUrl={post.imageUrl}

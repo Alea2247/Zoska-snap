@@ -11,6 +11,7 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
+  Divider,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -30,7 +31,7 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const toggleTheme = useThemeToggle(); // Theme toggle function
+  const toggleTheme = useThemeToggle();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -133,14 +134,6 @@ export default function Navbar() {
             }}
           />
         ))}
-        {/* Sun/Moon Toggle */}
-        <IconButton
-          onClick={handleThemeToggle}
-          sx={{ position: "absolute", bottom: "10px", right: "10px" }}
-          color="inherit"
-        >
-          {isSun ? <Brightness7Icon fontSize="large" /> : <Brightness4Icon fontSize="large" />}
-        </IconButton>
       </BottomNavigation>
 
       {/* Profile Menu */}
@@ -159,6 +152,13 @@ export default function Navbar() {
           </ListItemIcon>
           <ListItemText>Moj profil</ListItemText>
         </MenuItem>
+        <MenuItem onClick={handleThemeToggle}>
+          <ListItemIcon>
+            {isSun ? <Brightness4Icon fontSize="small" /> : <Brightness7Icon fontSize="small" />}
+          </ListItemIcon>
+          <ListItemText>{isSun ? 'Tmavý režim' : 'Svetlý režim'}</ListItemText>
+        </MenuItem>
+        <Divider />
         <MenuItem onClick={handleLogoutClick}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />

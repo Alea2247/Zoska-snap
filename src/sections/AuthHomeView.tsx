@@ -8,20 +8,22 @@ import Post from "../components/Post";
 // Temporary mock data - replace with actual database data later
 const mockPosts = [
   {
-    id: 1,
-    username: "user1",
-    profilePicture: "https://via.placeholder.com/150",
-    imageUrl: "https://via.placeholder.com/600",
-    likes: 123,
-    comments: 45
+    id: '1',
+    username: 'John Doe',
+    profilePicture: '/path/to/profile1.jpg',
+    imageUrl: '/path/to/post1.jpg',
+    likes: 42,
+    comments: 15,
+    isLiked: false,
   },
   {
-    id: 2,
-    username: "user2",
-    profilePicture: "https://via.placeholder.com/150",
-    imageUrl: "https://via.placeholder.com/600",
-    likes: 67,
-    comments: 12
+    id: '2',
+    username: 'Jane Smith',
+    profilePicture: '/path/to/profile2.jpg',
+    imageUrl: '/path/to/post2.jpg',
+    likes: 27,
+    comments: 8,
+    isLiked: false,
   },
   // Add more mock posts as needed
 ];
@@ -41,11 +43,13 @@ export default function AuthHomeView({ session }: { session: Session | null }) {
         {mockPosts.map((post) => (
           <Post
             key={post.id}
+            id={post.id}
             username={post.username}
             profilePicture={post.profilePicture}
             imageUrl={post.imageUrl}
             likes={post.likes}
             comments={post.comments}
+            isLiked={post.isLiked}
           />
         ))}
       </Box>
