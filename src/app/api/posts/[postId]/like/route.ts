@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../../../lib/auth";
-import prisma from "../../../../../lib/pisma";
+import { authOptions } from "@/lib/auth";
+import prisma from "../../../../../lib/prisma";
 
 export async function POST(
   request: Request,
@@ -21,14 +21,12 @@ export async function POST(
       return new NextResponse("User not found", { status: 404 });
     }
 
-    const { postId } = params;
-
-    // Check if the user already liked the post
+    // Check if like already exists
     const existingLike = await prisma.like.findUnique({
       where: {
         userId_postId: {
           userId: user.id,
-          postId,
+          postId: params.postId,
         },
       },
     });
@@ -39,28 +37,39 @@ export async function POST(
         where: {
           userId_postId: {
             userId: user.id,
-            postId,
+            postId: params.postId,
           },
         },
       });
-    } else {
-      // Like the post
-      await prisma.like.create({
-        data: {
-          userId: user.id,
-          postId,
+
+      // Get updated like count
+      const likeCount = await prisma.like.count({
+        where: {
+          postId: params.postId,
         },
       });
+
+      return NextResponse.json({ liked: false, likeCount });
     }
+
+    // Like the post
+    await prisma.like.create({
+      data: {
+        userId: user.id,
+        postId: params.postId,
+      },
+    });
 
     // Get updated like count
     const likeCount = await prisma.like.count({
-      where: { postId },
+      where: {
+        postId: params.postId,
+      },
     });
 
-    return NextResponse.json({ liked: !existingLike, likeCount });
+    return NextResponse.json({ liked: true, likeCount });
   } catch (error) {
     console.error("[LIKE_POST]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
-}
+} 
