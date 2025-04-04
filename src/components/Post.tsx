@@ -6,6 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
 import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 
@@ -209,15 +210,18 @@ export default function Post({ id, username, profilePicture, imageUrl, likes, co
                 Zobraziť všetky komentáre ({commentCount})
               </Button>
             )}
-            <form onSubmit={handleAddComment} style={{ marginTop: '1rem' }}>
+            <form onSubmit={handleAddComment} style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <TextField
                 fullWidth
                 size="small"
                 placeholder="Pridať komentár..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                sx={{ mb: 1 }}
+                sx={{ flex: 1 }}
               />
+              <IconButton type="submit" color="primary">
+                <SendIcon />
+              </IconButton>
             </form>
           </Box>
         </CardContent>
@@ -260,15 +264,18 @@ export default function Post({ id, username, profilePicture, imageUrl, likes, co
                 )}
               </Box>
             ))}
-            <form onSubmit={handleAddComment} style={{ marginTop: '1rem' }}>
+            <form onSubmit={handleAddComment} style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <TextField
                 fullWidth
                 size="small"
                 placeholder="Pridať komentár..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                sx={{ mb: 1 }}
+                sx={{ flex: 1 }}
               />
+              <IconButton type="submit" color="primary">
+                <SendIcon />
+              </IconButton>
             </form>
           </Box>
         </DialogContent>
